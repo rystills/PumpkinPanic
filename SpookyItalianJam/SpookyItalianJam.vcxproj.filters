@@ -15,7 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SpookyItalianJam.cpp">
+    <ClInclude Include="cube.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gldemo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="player.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
