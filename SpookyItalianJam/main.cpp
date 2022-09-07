@@ -5,13 +5,12 @@
 #include <math.h>
 
 #include "cube.hpp"
-
-static uint32_t animation = 3283;
-static uint32_t texture_index = 0;
-static bool near = false;
+#include "player.hpp"
 
 static GLuint buffers[2];
 static GLuint textures[4];
+
+Player player = Player();
 
 static const char* texture_paths[4] = {
 	"circle.sprite",
@@ -156,11 +155,11 @@ void render()
 	glClearColor(0.3f, 0.1f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	float rotation = animation * 0.01f;
+	float rotation = player.animation * 0.01f;
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslatef(0, sinf(rotation * 0.8f), near ? -2.2f : -3.5f);
+	glTranslatef(0, sinf(rotation * 0.8f), player.near ? -2.2f : -3.5f);
 
 	glPushMatrix();
 
@@ -191,7 +190,7 @@ void render()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, textures[texture_index]);
+	glBindTexture(GL_TEXTURE_2D, textures[player.texture_index]);
 
 	draw_cube();
 
@@ -218,29 +217,7 @@ int main()
 
 	while (1)
 	{
-		controller_scan();
-		struct controller_data pressed = get_keys_pressed();
-		struct controller_data down = get_keys_down();
-
-		if (pressed.c[0].A) {
-			animation++;
-		}
-
-		if (pressed.c[0].B) {
-			animation--;
-		}
-
-		if (down.c[0].start) {
-			debugf("%ld\n", animation);
-		}
-
-		if (down.c[0].C_down) {
-			near = !near;
-		}
-
-		if (down.c[0].C_right) {
-			texture_index = (texture_index + 1) % 4;
-		}
+		player.update();
 
 		render();
 
