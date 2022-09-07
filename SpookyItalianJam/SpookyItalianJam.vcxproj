@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cube.h" />
+    <ClInclude Include="cube.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gldemo.c" />
-    <ClCompile Include="player.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
