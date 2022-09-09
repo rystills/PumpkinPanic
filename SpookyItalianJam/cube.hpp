@@ -1,5 +1,4 @@
-#ifndef CUBE_H
-#define CUBE_H
+#pragma once
 
 #include <stdint.h>
 
@@ -12,10 +11,10 @@ typedef struct {
 
 static const vertex_t cube_vertices[] = {
     // +X
-    { .position = { 1.f, -1.f, -1.f}, .texcoord = {0.f, 0.f}, .normal = { 1.f,  0.f,  0.f}, .color = 0xFF0000FF },
-    { .position = { 1.f,  1.f, -1.f}, .texcoord = {1.f, 0.f}, .normal = { 1.f,  0.f,  0.f}, .color = 0xFF0000FF },
-    { .position = { 1.f,  1.f,  1.f}, .texcoord = {1.f, 1.f}, .normal = { 1.f,  0.f,  0.f}, .color = 0xFF0000FF },
-    { .position = { 1.f, -1.f,  1.f}, .texcoord = {0.f, 1.f}, .normal = { 1.f,  0.f,  0.f}, .color = 0xFF0000FF },
+    { .position = { 1.f, -1.f, -1.f}, .texcoord = {0.f, 0.f}, .normal = { 1.f,  0.f,  0.f}, .color = 0x00FF00FF },
+    { .position = { 1.f,  1.f, -1.f}, .texcoord = {1.f, 0.f}, .normal = { 1.f,  0.f,  0.f}, .color = 0x00FF00FF },
+    { .position = { 1.f,  1.f,  1.f}, .texcoord = {1.f, 1.f}, .normal = { 1.f,  0.f,  0.f}, .color = 0x00FF00FF },
+    { .position = { 1.f, -1.f,  1.f}, .texcoord = {0.f, 1.f}, .normal = { 1.f,  0.f,  0.f}, .color = 0x00FF00FF },
 
     // -X
     { .position = {-1.f, -1.f, -1.f}, .texcoord = {0.f, 0.f}, .normal = {-1.f,  0.f,  0.f}, .color = 0x00FFFFFF },
@@ -56,5 +55,3 @@ static const uint16_t cube_indices[] = {
     16, 17, 18, 16, 18, 19,
     20, 21, 22, 20, 22, 23,
 };
-
-#endif

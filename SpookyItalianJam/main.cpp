@@ -155,45 +155,54 @@ void render()
 	glClearColor(0.3f, 0.1f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	float rotation = player.animation * 0.01f;
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslatef(0, sinf(rotation * 0.8f), player.near ? -2.2f : -3.5f);
+
+	//// band / circle
+	//glPushMatrix();
+
+	//glRotatef(rotation * 0.46f, 0, 1, 0);
+	//glRotatef(rotation * 1.35f, 1, 0, 0);
+	//glRotatef(rotation * 1.81f, 0, 0, 1);
+
+	//glDisable(GL_LIGHTING);
+	//glDisable(GL_BLEND);
+	//glDisable(GL_CULL_FACE);
+	//glDisable(GL_TEXTURE_2D);
+
+	//glColor3f(1.f, 1.f, 1.f);
+	//draw_band();
+	//glColor3f(0.f, 1.f, 1.f);
+	//draw_circle();
+
+	//glPopMatrix();
 
 	glPushMatrix();
 
-	glRotatef(rotation * 0.46f, 0, 1, 0);
-	glRotatef(rotation * 1.35f, 1, 0, 0);
-	glRotatef(rotation * 1.81f, 0, 0, 1);
-
-	glDisable(GL_LIGHTING);
-	glDisable(GL_BLEND);
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_TEXTURE_2D);
-
-	glColor3f(1.f, 1.f, 1.f);
-	draw_band();
-	glColor3f(0.f, 1.f, 1.f);
-	draw_circle();
-
-	glPopMatrix();
-
-	glPushMatrix();
-
-	glRotatef(rotation * 0.23f, 1, 0, 0);
-	glRotatef(rotation * 0.98f, 0, 0, 1);
-	glRotatef(rotation * 1.71f, 0, 1, 0);
+	// move the player away from the camera
+	glTranslatef(0, -2, -3.f);
+	glRotatef(player.rot[0], 1, 0, 0);
+	glRotatef(player.rot[1], 0, 0, 1);
+	glRotatef(player.rot[2], 0, 1, 0);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_BLEND);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, textures[player.texture_index]);
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 	draw_cube();
 
+	glPopMatrix();
+
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, textures[1]);
+	for (int i = 0; i < player.obstacles_length; ++i) {
+		// move the player away from the camera
+		glTranslatef(0, -2, -20.f + player.elapsedFrames *.1f);
+		draw_cube();
+	}
 	glPopMatrix();
 }
 
