@@ -31,4 +31,7 @@ void Player::update() {
 	++elapsedFrames;
 	rot[0] = sinf(elapsedFrames*.1f)*10;
 	pos[0] = (lane-1) * 2;
+	if (elapsedFrames >= 150 && elapsedFrames < 190 && lane == 1) {
+		elapsedFrames = 0;
+	}
 }
