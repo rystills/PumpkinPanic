@@ -1,4 +1,5 @@
 #include <libdragon.h>
+#include <math.h>
 
 #include "player.hpp"
 
@@ -11,20 +12,12 @@ void Player::update() {
 	struct controller_data pressed = get_keys_pressed();
 	struct controller_data down = get_keys_down();
 
-	if (pressed.c[0].left) {
-		rot[0]-=5;
+	if (down.c[0].left && lane > 0) {
+		--lane;
 	}
 
-	if (pressed.c[0].right) {
-		rot[0] += 5;
-	}
-
-	if (pressed.c[0].up) {
-		rot[1] += 5;
-	}
-
-	if (pressed.c[0].down) {
-		rot[1] -= 5;
+	if (down.c[0].right && lane < 2) {
+		++lane;
 	}
 
 	/*if (down.c[0].start) {
@@ -36,5 +29,6 @@ void Player::update() {
 	}*/
 
 	++elapsedFrames;
-
+	rot[0] = sinf(elapsedFrames*.1f)*10;
+	pos[0] = (lane-1) * 2;
 }

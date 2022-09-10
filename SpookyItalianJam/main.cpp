@@ -7,6 +7,9 @@
 #include "cube.hpp"
 #include "player.hpp"
 
+GLfloat fog_color[] = { 0.3f, 0.1f, 0.6f, 1.f };
+float viewDist = 20.f;
+
 static GLuint buffers[2];
 static GLuint textures[4];
 
@@ -53,7 +56,7 @@ void setup()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glFrustum(-1 * aspect_ratio, 1 * aspect_ratio, -1, 1, 1, 10);
+	glFrustum(-1 * aspect_ratio, 1 * aspect_ratio, -1, 1, 1, viewDist);
 	//glOrtho(-2*aspect_ratio, 2*aspect_ratio, -2, 2, 5, -5);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -65,18 +68,16 @@ void setup()
 	GLfloat light_diffuse[] = { 1, 1, 1, 1 };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
 	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.0f);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 1.0f / 10.0f);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 1.0f / viewDist);
 
 	GLfloat mat_diffuse[] = { 1, 1, 1, 0.6f };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
 
-	//glEnable(GL_FOG);
-
-	GLfloat fog_color[] = { 1, 0, 0, 1 };
+	glEnable(GL_FOG);
 
 	glFogfv(GL_FOG_COLOR, fog_color);
-	glFogf(GL_FOG_START, 1.0f);
-	glFogf(GL_FOG_END, 6.0f);
+	glFogf(GL_FOG_START, 0.0f);
+	glFogf(GL_FOG_END, viewDist);
 
 	glGenTextures(4, textures);
 
@@ -152,7 +153,7 @@ void draw_circle()
 
 void render()
 {
-	glClearColor(0.3f, 0.1f, 0.6f, 1.f);
+	glClearColor(fog_color[0], fog_color[1], fog_color[2], fog_color[3]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -180,7 +181,7 @@ void render()
 	glPushMatrix();
 
 	// move the player away from the camera
-	glTranslatef(0, -2, -3.f);
+	glTranslatef(player.pos[0], player.pos[1], player.pos[2]);
 	glRotatef(player.rot[0], 1, 0, 0);
 	glRotatef(player.rot[1], 0, 0, 1);
 	glRotatef(player.rot[2], 0, 1, 0);
