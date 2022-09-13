@@ -16,7 +16,7 @@ static GLuint textures[4];
 Player player = Player();
 
 static const char* texture_paths[4] = {
-	"circle.sprite",
+	"pumpkinSkin.sprite",
 	"diamond.sprite",
 	"pentagon.sprite",
 	"triangle.sprite",
@@ -200,9 +200,10 @@ void render()
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
 	for (int i = 0; i < player.obstacles_length; ++i) {
-		// move the player away from the camera
-		glTranslatef(0, -2, -20.f + player.elapsedFrames *.1f);
+		glPushMatrix();
+		glTranslatef((player.obstacles[i].lane - 1) * 2, -2, player.obstacles[i].zpos + player.elapsedFrames *.1f);
 		draw_cube();
+		glPopMatrix();
 	}
 	glPopMatrix();
 }

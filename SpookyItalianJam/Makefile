@@ -15,7 +15,7 @@ filesystem/%.sprite: assets/%.png
 	@echo "    [SPRITE] $@"
 	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) "$<" "$@"
 
-filesystem/circle.sprite: MKSPRITE_FLAGS=16 1 1
+filesystem/pumpkinSkin.sprite: MKSPRITE_FLAGS=16 1 1
 filesystem/diamond.sprite: MKSPRITE_FLAGS=16 1 1
 filesystem/pentagon.sprite: MKSPRITE_FLAGS=16 1 1
 filesystem/triangle.sprite: MKSPRITE_FLAGS=16 1 1
