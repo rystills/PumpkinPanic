@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="cube.hpp" />
     <ClInclude Include="player.hpp" />
+    <ClInclude Include="plane.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

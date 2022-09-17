@@ -5,12 +5,14 @@
 #include <math.h>
 
 #include "cube.hpp"
+#include "plane.hpp"
 #include "player.hpp"
 
 GLfloat fog_color[] = { 0.3f, 0.1f, 0.6f, 1.f };
 float viewDist = 20.f;
 
-static GLuint buffers[2];
+static GLuint cubeBuffers[2];
+static GLuint planeBuffers[2];
 static GLuint textures[4];
 
 Player player = Player();
@@ -33,13 +35,21 @@ sprite_t* load_sprite(const char* path)
 
 void setup()
 {
-	glGenBuffersARB(2, buffers);
+	glGenBuffersARB(2, cubeBuffers);
 
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, buffers[0]);
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, cubeBuffers[0]);
 	glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW_ARB);
 
-	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, buffers[1]);
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, cubeBuffers[1]);
 	glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, sizeof(cube_indices), cube_indices, GL_STATIC_DRAW_ARB);
+
+	glGenBuffersARB(2, planeBuffers);
+
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, planeBuffers[0]);
+	glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(plane_vertices), plane_vertices, GL_STATIC_DRAW_ARB);
+
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, planeBuffers[1]);
+	glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, sizeof(plane_indices), plane_indices, GL_STATIC_DRAW_ARB);
 
 	glEnable(GL_LIGHT0);
 	//glEnable(GL_COLOR_MATERIAL);
@@ -108,8 +118,27 @@ void draw_cube()
 	glNormalPointer(GL_FLOAT, sizeof(vertex_t), (GLvoid*)(5 * sizeof(float)));
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertex_t), (GLvoid*)(8 * sizeof(float)));
 
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, cubeBuffers[0]);
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, cubeBuffers[1]);
 	glDrawElements(GL_TRIANGLES, sizeof(cube_indices) / sizeof(uint16_t), GL_UNSIGNED_SHORT, 0);
 }
+void draw_plane()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, sizeof(vertex_t), (GLvoid*)(0 * sizeof(float)));
+	glTexCoordPointer(2, GL_FLOAT, sizeof(vertex_t), (GLvoid*)(3 * sizeof(float)));
+	glNormalPointer(GL_FLOAT, sizeof(vertex_t), (GLvoid*)(5 * sizeof(float)));
+	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertex_t), (GLvoid*)(8 * sizeof(float)));
+
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, planeBuffers[0]);
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, planeBuffers[1]);
+	glDrawElements(GL_TRIANGLES, sizeof(plane_indices) / sizeof(uint16_t), GL_UNSIGNED_SHORT, 0);
+}
+
 
 void draw_band()
 {
@@ -197,15 +226,13 @@ void render()
 
 	glPopMatrix();
 
-	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
 	for (int i = 0; i < player.obstacles_length; ++i) {
 		glPushMatrix();
 		glTranslatef((player.obstacles[i].lane - 1) * 2, -2, player.obstacles[i].zpos + player.elapsedFrames *.1f);
-		draw_cube();
+		draw_plane();
 		glPopMatrix();
 	}
-	glPopMatrix();
 }
 
 int main()

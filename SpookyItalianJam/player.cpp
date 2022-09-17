@@ -7,6 +7,26 @@
 Player::Player() {
 }
 
+void Player::checkSpawnEntity(Entity* arr, uint32_t &arrlen, uint32_t tickFrames) {
+	if (elapsedFrames % tickFrames == 0) {
+		// spawn a new obstacle
+		arr[arrlen++] = { EntityType::cube, -20.f - elapsedFrames * .1f, rand() % 3 };
+		// remove obstacles in the foreground
+		for (int i = 0; i < arrlen; ++i) {
+			if (!(arr[i].zpos + .1f * elapsedFrames > 0)) {
+				// shift back from here
+				if (i > 0) {
+					for (int j = i; j < arrlen; ++j) {
+						arr[j - i] = arr[j];
+					}
+					arrlen -= i;
+				}
+				break;
+			}
+		}
+	}
+}
+
 void Player::update() {
 	controller_scan();
 	struct controller_data pressed = get_keys_pressed();
@@ -16,23 +36,7 @@ void Player::update() {
 
 	lane += (down.c[0].right && lane < 2);
 
-	if (elapsedFrames % 50 == 0) {
-		// spawn a new obstacle
-		obstacles[obstacles_length++] = { ObstacleType::cube, -20.f - elapsedFrames*.1f, rand() % 3 };
-		// remove obstacles in the foreground
-		for (int i = 0; i < obstacles_length; ++i) {
-			if  (!(obstacles[i].zpos + .1f * elapsedFrames > 0)) {
-				// shift back from here
-				if (i > 0) {
-					for (int j = i; j < obstacles_length; ++j) {
-						obstacles[j - i] = obstacles[j];
-					}
-					obstacles_length -= i;
-				}
-				break;
-			}
-		}
-	}
+	checkSpawnEntity(obstacles, obstacles_length, 50);
 
 	++elapsedFrames;
 	rot[0] = sinf(elapsedFrames*.1f)*10;
