@@ -108,6 +108,8 @@ void setup()
 
 void draw_cube()
 {
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, cubeBuffers[0]);
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, cubeBuffers[1]);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -118,12 +120,12 @@ void draw_cube()
 	glNormalPointer(GL_FLOAT, sizeof(vertex_t), (GLvoid*)(5 * sizeof(float)));
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertex_t), (GLvoid*)(8 * sizeof(float)));
 
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, cubeBuffers[0]);
-	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, cubeBuffers[1]);
 	glDrawElements(GL_TRIANGLES, sizeof(cube_indices) / sizeof(uint16_t), GL_UNSIGNED_SHORT, 0);
 }
 void draw_plane()
 {
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, planeBuffers[0]);
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, planeBuffers[1]);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -134,8 +136,6 @@ void draw_plane()
 	glNormalPointer(GL_FLOAT, sizeof(vertex_t), (GLvoid*)(5 * sizeof(float)));
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertex_t), (GLvoid*)(8 * sizeof(float)));
 
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, planeBuffers[0]);
-	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, planeBuffers[1]);
 	glDrawElements(GL_TRIANGLES, sizeof(plane_indices) / sizeof(uint16_t), GL_UNSIGNED_SHORT, 0);
 }
 
