@@ -34,8 +34,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{12f3cf51-7bab-46a6-8e7c-ca3d8f52b80c}</ProjectGuid>
-    <RootNamespace>SpookyItalianJam</RootNamespace>
+    <RootNamespace>PumpkinPanic</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>PumpkinPanic</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -84,11 +85,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Ryan\Desktop\git\SpookyItalianJam\libdragon\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Ryan\Desktop\git\PumpkinPanic\libdragon\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\Ryan\Desktop\git\SpookyItalianJam\libdragon\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Ryan\Desktop\git\PumpkinPanic\libdragon\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
