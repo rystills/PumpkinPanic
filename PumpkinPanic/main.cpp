@@ -230,9 +230,19 @@ void render()
 	for (int i = 0; i < player.obstacles_length; ++i) {
 		glPushMatrix();
 		glTranslatef((player.obstacles[i].lane - 1) * 2, -2, player.obstacles[i].zpos + player.elapsedFrames *.1f);
-		draw_plane();
+		draw_cube();
 		glPopMatrix();
 	}
+
+	glBindTexture(GL_TEXTURE_2D, textures[2]);
+	for (int i = 0; i < player.bgObjects_length; ++i) {
+		glPushMatrix();
+		glTranslatef((player.bgObjects[i].lane - 1) * 3, -3 + 3*(1 - player.bgObjects[i].lane % 2), player.bgObjects[i].zpos + player.elapsedFrames * .1f);
+		glRotatef((1 - player.bgObjects[i].lane) * -90, 0, 0, 1);
+		glScalef(3, 3, 3);
+		draw_plane();
+		glPopMatrix();
+	};
 }
 
 int main()
