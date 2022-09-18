@@ -17,6 +17,8 @@ static GLuint textures[4];
 
 Player player = Player();
 
+long long prevTickNum = 0;
+
 static const char* texture_paths[4] = {
 	"pumpkinSkin.sprite",
 	"diamond.sprite",
@@ -35,6 +37,7 @@ sprite_t* load_sprite(const char* path)
 
 void setup()
 {
+	timer_init();
 	glGenBuffersARB(2, cubeBuffers);
 
 	glBindBufferARB(GL_ARRAY_BUFFER_ARB, cubeBuffers[0]);
@@ -137,6 +140,31 @@ void draw_plane()
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertex_t), (GLvoid*)(8 * sizeof(float)));
 
 	glDrawElements(GL_TRIANGLES, sizeof(plane_indices) / sizeof(uint16_t), GL_UNSIGNED_SHORT, 0);
+}
+
+void draw_fps() {
+	long long curTickNum = timer_ticks();
+	float rectWidth = 3 * ((TICKS_PER_SECOND / 60.f) / (curTickNum - prevTickNum));
+	prevTickNum = curTickNum;
+
+	glDisable (GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glPushMatrix();
+	glTranslatef(5, 5, -7);
+	glRotatef(90, 1, 0, 0);
+	// 60 fps (full rectangle)
+	glScalef(3, .25f, .25f);
+	glBindTexture(GL_TEXTURE_2D, textures[1]);
+	draw_plane();
+	glScalef(1/3.f, 4, 4);
+	// real fps (partial rectangle)
+	glTranslatef(-(3 - rectWidth), 0, 0);
+	glScalef(rectWidth, .25f, .25f);
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
+	draw_plane();
+	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
 }
 
 
@@ -243,6 +271,9 @@ void render()
 		draw_plane();
 		glPopMatrix();
 	};
+
+	draw_fps();
+
 }
 
 int main()

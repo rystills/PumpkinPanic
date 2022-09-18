@@ -53,7 +53,7 @@ void Player::update() {
 
 	lane += (down.c[0].right && lane < 2);
 
-	checkSpawnEntity(obstacles, obstacles_length, 50, true);
+	checkSpawnEntity(obstacles, obstacles_length, 40, true);
 	checkSpawnEntity(bgObjects, bgObjects_length, 60, false);
 
 	++elapsedFrames;
